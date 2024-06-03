@@ -125,8 +125,6 @@ public class MainActivity extends AppCompatActivity {
             menu.findItem(R.id.nav_show_rents_admin).setVisible(true);
             menu.findItem(R.id.nav_show_users_admin).setVisible(true);
         } else {
-            menu.findItem(R.id.nav_view_cars).setVisible(true);
-            menu.findItem(R.id.nav_rent_car).setVisible(true);
             menu.findItem(R.id.nav_return_car).setVisible(true);
             menu.findItem(R.id.nav_rentals).setVisible(true);
             menu.findItem(R.id.nav_edit_profile).setVisible(true);

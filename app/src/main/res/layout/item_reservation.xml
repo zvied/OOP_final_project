@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="?android:attr/selectableItemBackground">
+
+    <!-- Make Model -->
+    <TextView
+        android:id="@+id/textMakeModel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+
+    <!-- Year -->
+    <TextView
+        android:id="@+id/textYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textMakeModel"
+        android:textSize="15dp"/>
+
+    <!-- Fuel Type -->
+    <TextView
+        android:id="@+id/textFuelType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textYear"
+        android:textSize="15dp"/>
+
+    <!-- Transmission Type -->
+    <TextView
+        android:id="@+id/textTransmissionType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textFuelType"
+        android:textSize="15dp"/>
+
+    <!-- Price Per Day -->
+    <TextView
+        android:id="@+id/textPricePerDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textTransmissionType"
+        android:textSize="15dp"/>
+
+    <!-- Reservation Start Time -->
+    <TextView
+        android:id="@+id/textReservationStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textPricePerDay"
+        android:textSize="15dp"/>
+
+    <!-- Reservation Duration -->
+    <TextView
+        android:id="@+id/textReservationDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textReservationStartTime"
+        android:textSize="15dp"/> <!-- Add this line -->
+
+    <!-- Return Car Button -->
+    <Button
+        android:id="@+id/buttonReturnCar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textReservationStartTime"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentEnd="true"
+        android:text="Return Car"/>
+
+    <!-- Border -->
+    <View
+        android:id="@+id/borderView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/buttonReturnCar"
+        android:background="@android:color/darker_gray"/>
+
+</RelativeLayout>

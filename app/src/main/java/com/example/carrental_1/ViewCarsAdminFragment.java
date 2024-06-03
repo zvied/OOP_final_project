@@ -6,14 +6,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.example.carrental_1.data.model.Car;
 import com.example.carrental_1.databinding.FragmentViewCarsAdminBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,7 +45,7 @@ public class ViewCarsAdminFragment extends Fragment implements CarsAdapter.OnIte
 
         db = FirebaseFirestore.getInstance();
         carList = new ArrayList<>();
-        adapter = new CarsAdapter(carList, this);
+        adapter = new CarsAdapter(carList, this, true); // Admin view
 
         binding.recyclerViewCars.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerViewCars.setAdapter(adapter);
@@ -117,5 +114,18 @@ public class ViewCarsAdminFragment extends Fragment implements CarsAdapter.OnIte
                         Toast.makeText(getContext(), "Failed to delete car", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    public void onEditClick(Car car) {
+        // Navigate to the edit car fragment with the car details
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("car", car);
+        Navigation.findNavController(getView()).navigate(R.id.nav_edit_car, bundle);
+    }
+
+    @Override
+    public void onMakeReservationClick(Car car) {
+        // Admin should not be making reservations, no implementation needed
     }
 }

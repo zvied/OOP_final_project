@@ -46,4 +46,16 @@
         android:name="com.example.carrental_1.ViewUsersAdminFragment"
         android:label="Edit Car"
         tools:layout="@layout/fragment_view_users_admin" />
+
+    <fragment
+        android:id="@+id/nav_return_car"
+        android:name="com.example.carrental_1.ReturnCarFragment"
+        android:label="Return Car"
+        tools:layout="@layout/fragment_return_car" />
+
+    <fragment
+        android:id="@+id/nav_rentals"
+        android:name="com.example.carrental_1.MyRentalsFragment"
+        android:label="My previous rents"
+        tools:layout="@layout/fragment_my_rentals" />
 </navigation>

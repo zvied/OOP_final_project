@@ -53,9 +53,9 @@
             android:textSize="15dp"/>
     </LinearLayout>
 
-    <!-- Price -->
+    <!-- Fuel -->
     <LinearLayout
-        android:id="@+id/priceLayout"
+        android:id="@+id/fuelLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -63,10 +63,60 @@
         android:layout_marginBottom="4dp">
 
         <TextView
+            android:id="@+id/textFuelLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fuel: "
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:baselineAligned="false"/>
+
+        <TextView
+            android:id="@+id/textFuel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"/>
+    </LinearLayout>
+
+    <!-- Transmission -->
+    <LinearLayout
+        android:id="@+id/transmissionLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/fuelLayout"
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:id="@+id/textTransmissionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transmission: "
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:baselineAligned="false"/>
+
+        <TextView
+            android:id="@+id/textTransmission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"/>
+    </LinearLayout>
+
+    <!-- Price -->
+    <LinearLayout
+        android:id="@+id/priceLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/transmissionLayout"
+        android:layout_marginBottom="4dp">
+
+        <TextView
             android:id="@+id/textPriceLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price: "
+            android:text="Price per day: "
             android:textSize="20dp"
             android:textStyle="bold"
             android:baselineAligned="false"/>
@@ -78,6 +128,17 @@
             android:textSize="15dp"/>
     </LinearLayout>
 
+    <!-- Make Reservation Button -->
+    <Button
+        android:id="@+id/buttonMakeReservation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/priceLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:text="Make Reservation"
+        android:visibility="gone"/>
+
     <!-- Edit Button -->
     <Button
         android:id="@+id/buttonEditCar"
@@ -85,8 +146,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/priceLayout"
         android:text="Edit"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="8dp"/>
+        android:layout_toStartOf="@id/buttonMakeReservation"
+        android:layout_marginStart="8dp"
+        android:visibility="visible"/>
 
     <!-- Delete Button -->
     <Button
@@ -95,13 +157,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/priceLayout"
         android:text="Delete"
-        android:layout_toStartOf="@id/buttonEditCar"/>
+        android:layout_toStartOf="@id/buttonEditCar"
+        android:visibility="gone"/>
 
     <!-- Border -->
     <View
+        android:id="@+id/borderView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/buttonEditCar"
         android:layout_marginTop="8dp"
         android:background="@android:color/darker_gray"/>
 

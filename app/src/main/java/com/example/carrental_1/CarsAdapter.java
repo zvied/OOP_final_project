@@ -4,32 +4,32 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carrental_1.data.model.Car;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.CarViewHolder> {
 
     private List<Car> carList;
-    private
-    ViewCarsAdminFragment onItemClickListener;
+    private OnItemClickListener onItemClickListener;
+    private boolean isAdmin;
 
-    public CarsAdapter(List<Car> carList,
-                       ViewCarsAdminFragment onItemClickListener) {
+    public CarsAdapter(List<Car> carList, OnItemClickListener onItemClickListener, boolean isAdmin) {
         this.carList = carList;
         this.onItemClickListener = onItemClickListener;
+        this.isAdmin = isAdmin;
     }
 
-    interface OnItemClickListener {
+    public interface OnItemClickListener {
         void onDeleteClick(Car car);
+        void onEditClick(Car car);
+        void onMakeReservationClick(Car car);
     }
 
     @NonNull
@@ -44,18 +44,36 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.CarViewHolder>
         Car car = carList.get(position);
         holder.makeModel.setText(car.getMake() + " " + car.getModel());
         holder.year.setText(car.getYear());
-        holder.pricePerDay.setText(car.getPricePerDay());
-        holder.editButton.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("car", car);
-            Navigation.findNavController(v).navigate(R.id.nav_edit_car, bundle);
-        });
-        holder.deleteButton.setOnClickListener(v -> {
-            // Update the car with isDeleted = true
-            car.setIsDeleted(true);
-            onItemClickListener.onDeleteClick(car);
-        });
-//        holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(car));
+        holder.pricePerDay.setText(String.format("%.2f", Double.parseDouble(car.getPricePerDay())) + "€");
+        holder.fuel.setText(car.getFuelType());
+        holder.transmission.setText(car.getTransmissionType());
+
+        if (isAdmin) {
+            holder.editButton.setVisibility(View.VISIBLE);
+            holder.deleteButton.setVisibility(View.VISIBLE);
+            holder.makeReservationButton.setVisibility(View.GONE);
+
+            holder.editButton.setOnClickListener(v -> onItemClickListener.onEditClick(car));
+            holder.deleteButton.setOnClickListener(v -> {
+                car.setIsDeleted(true);
+                onItemClickListener.onDeleteClick(car);
+            });
+        } else {
+            holder.editButton.setVisibility(View.GONE);
+            holder.deleteButton.setVisibility(View.GONE);
+            holder.makeReservationButton.setVisibility(View.VISIBLE);
+
+            holder.makeReservationButton.setOnClickListener(v -> onItemClickListener.onMakeReservationClick(car));
+        }
+
+        // Adjust the border layout parameters based on the button visibility
+        RelativeLayout.LayoutParams borderParams = (RelativeLayout.LayoutParams) holder.borderView.getLayoutParams();
+        if (holder.makeReservationButton.getVisibility() == View.VISIBLE) {
+            borderParams.addRule(RelativeLayout.BELOW, R.id.buttonMakeReservation);
+        } else {
+            borderParams.addRule(RelativeLayout.BELOW, R.id.buttonDeleteCar);
+        }
+        holder.borderView.setLayoutParams(borderParams);
     }
 
     @Override
@@ -64,16 +82,21 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.CarViewHolder>
     }
 
     static class CarViewHolder extends RecyclerView.ViewHolder {
-        TextView makeModel, year, pricePerDay;
-        Button editButton, deleteButton;
+        TextView makeModel, year, pricePerDay, fuel, transmission;
+        Button editButton, deleteButton, makeReservationButton;
+        View borderView;
 
         CarViewHolder(View view) {
             super(view);
             makeModel = view.findViewById(R.id.textMakeModel);
             year = view.findViewById(R.id.textYear);
             pricePerDay = view.findViewById(R.id.textPricePerDay);
+            fuel = view.findViewById(R.id.textFuel);
+            transmission = view.findViewById(R.id.textTransmission);
             editButton = view.findViewById(R.id.buttonEditCar);
             deleteButton = view.findViewById(R.id.buttonDeleteCar);
+            makeReservationButton = view.findViewById(R.id.buttonMakeReservation);
+            borderView = view.findViewById(R.id.borderView);
         }
     }
 }

@@ -46,6 +46,7 @@
     <string name="model">Model</string>
     <string name="make">Make</string>
     <string name="show_cars">Show cars</string>
+    <string name="no_current_reservations_are_active">No current reservations are active</string>
     <string-array name="fuel_type_array">
         <item>Select Fuel Type</item>
         <item>Diesel</item>

@@ -5,8 +5,10 @@
     android:padding="16dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCars"
+        android:id="@+id/recyclerViewRentals"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"/>
+
 </RelativeLayout>
