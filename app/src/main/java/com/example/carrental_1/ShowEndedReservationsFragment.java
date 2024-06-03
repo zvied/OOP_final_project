@@ -31,7 +31,7 @@ public class ShowEndedReservationsFragment extends Fragment {
     private int pendingFetches = 0;
 
     public ShowEndedReservationsFragment() {
-        // Required empty public constructor
+
     }
 
     @Override

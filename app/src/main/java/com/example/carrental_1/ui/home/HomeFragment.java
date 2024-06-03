@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickLis
     private boolean isAdmin;
     private int pendingFetches = 0;
     public HomeFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -203,12 +203,12 @@ public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickLis
 
     @Override
     public void onDeleteClick(Car car) {
-        // Handle car deletion logic
+
     }
 
     @Override
     public void onEditClick(Car car) {
-        // Handle car edit logic
+
     }
 
     @Override
@@ -227,7 +227,7 @@ public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickLis
         db.collection("reservations")
                 .add(reservation)
                 .addOnSuccessListener(documentReference -> {
-                    // Update the car record's isAvailable field to false
+
                     db.collection("cars").document(car.getId())
                             .update("isAvailable", false)
                             .addOnSuccessListener(aVoid -> { fetchAvailableCars(); Toast.makeText(getContext(), "Reservation made successfully", Toast.LENGTH_SHORT).show();})
@@ -242,28 +242,24 @@ public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickLis
     }
 
     private void returnCar(Reservation reservation) {
-        // Update reservation end time and calculate price
         Date endTime = new Date();
         long duration = endTime.getTime() - reservation.getReservationStartTime().getTime();
         long days = TimeUnit.MILLISECONDS.toDays(duration);
         if (days == 0) {
-            days = 1; // Minimum charge for one day
+            days = 1;
         }
         double totalPrice = days * Integer.parseInt(reservation.getCar().getPricePerDay());
 
-        // Update the reservation object
         reservation.setReservationEndTime(endTime);
         reservation.setIsReservationOver(true);
         reservation.setTotalPrice(totalPrice);
-        reservation.setReservationDuration(duration);  // Set reservation duration
+        reservation.setReservationDuration(duration);
 
-        // Update the car availability
         db.collection("cars").document(reservation.getCarId())
                 .update("isAvailable", true)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Update the reservation in Firestore
                         db.collection("reservations").document(reservation.getId())
                                 .set(reservation)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {

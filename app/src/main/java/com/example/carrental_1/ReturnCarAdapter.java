@@ -50,7 +50,6 @@ public class ReturnCarAdapter extends RecyclerView.Adapter<ReturnCarAdapter.Rese
 
         holder.returnCarButton.setOnClickListener(v -> onItemClickListener.onReturnCarClick(reservation));
 
-        // Start updating the duration
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -58,7 +57,6 @@ public class ReturnCarAdapter extends RecyclerView.Adapter<ReturnCarAdapter.Rese
                 String durationText = formatDuration(duration);
                 holder.reservationDuration.setText(durationText);
 
-                // Schedule the next update in 1 second
                 handler.postDelayed(this, 1000);
             }
         });

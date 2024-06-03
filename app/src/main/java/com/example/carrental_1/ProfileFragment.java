@@ -33,7 +33,7 @@ public class ProfileFragment extends Fragment {
     private FirebaseFirestore db;
 
     public ProfileFragment() {
-        // Required empty public constructor
+
     }
 
     @Override

@@ -13,7 +13,7 @@ public class Reservation {
     private long reservationDuration;
     private Car car;
 
-    // No-argument constructor
+
     public Reservation() {
     }
 

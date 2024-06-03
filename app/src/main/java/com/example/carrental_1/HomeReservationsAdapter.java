@@ -57,7 +57,6 @@ public class HomeReservationsAdapter extends RecyclerView.Adapter<HomeReservatio
                 String durationText = formatDuration(duration);
                 holder.reservationDuration.setText(durationText);
 
-                // Schedule the next update in 1 second
                 handler.postDelayed(this, 1000);
             }
         });

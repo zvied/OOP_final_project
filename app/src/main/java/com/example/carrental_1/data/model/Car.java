@@ -18,18 +18,6 @@ public class Car implements Serializable {
     public Car() {
     }
 
-//    public Car(String id, String make, String model, String year, String fuelType, String transmissionType, String pricePerDay, boolean isAvailable, boolean isDeleted) {
-//        this.id = id;
-//        this.make = make;
-//        this.model = model;
-//        this.year = year;
-//        this.fuelType = fuelType;
-//        this.transmissionType = transmissionType;
-//        this.pricePerDay = pricePerDay;
-//        this.isAvailable = isAvailable;
-//        this.isDeleted = isDeleted;
-//    }
-
     public String getId() {
         return id;
     }

@@ -28,7 +28,6 @@ public class EditCarFragment extends Fragment {
     private Car car;
 
     public EditCarFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -61,13 +60,11 @@ public class EditCarFragment extends Fragment {
     }
 
     private void setupSpinners() {
-        // Setup Fuel Type Spinner
         ArrayAdapter<CharSequence> adapterFuelType = ArrayAdapter.createFromResource(getContext(),
                 R.array.fuel_type_array, android.R.layout.simple_spinner_item);
         adapterFuelType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerFuelType.setAdapter(adapterFuelType);
 
-        // Setup Transmission Type Spinner
         ArrayAdapter<CharSequence> adapterTransmissionType = ArrayAdapter.createFromResource(getContext(),
                 R.array.transmission_type_array, android.R.layout.simple_spinner_item);
         adapterTransmissionType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -32,7 +32,7 @@ public class MyRentalsFragment extends Fragment {
     private FirebaseAuth auth;
 
     public MyRentalsFragment() {
-        // Required empty public constructor
+
     }
 
     @Override

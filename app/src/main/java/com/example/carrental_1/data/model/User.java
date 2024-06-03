@@ -10,7 +10,7 @@ public class User implements Serializable {
     private boolean isDeleted;
     private boolean isAdmin;
 
-    // No-argument constructor
+
     public User() {
     }
 

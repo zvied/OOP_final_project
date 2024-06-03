@@ -31,12 +31,11 @@ public class AddCarFragment extends Fragment {
     private FirebaseFirestore db;
 
     public AddCarFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment using data binding
         binding = FragmentAddCarBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -58,14 +57,12 @@ public class AddCarFragment extends Fragment {
     }
 
     private void setupSpinners() {
-        // Setup Fuel Type Spinner
         Spinner spinnerFuelType = binding.spinnerFuelType;
         ArrayAdapter<CharSequence> adapterFuelType = ArrayAdapter.createFromResource(getContext(),
                 R.array.fuel_type_array, android.R.layout.simple_spinner_item);
         adapterFuelType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFuelType.setAdapter(adapterFuelType);
 
-        // Setup Transmission Type Spinner
         Spinner spinnerTransmissionType = binding.spinnerTransmissionType;
         ArrayAdapter<CharSequence> adapterTransmissionType = ArrayAdapter.createFromResource(getContext(),
                 R.array.transmission_type_array, android.R.layout.simple_spinner_item);

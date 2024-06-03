@@ -30,7 +30,7 @@ public class ViewUsersAdminFragment extends Fragment implements UsersAdminAdapte
     private List<User> userList;
 
     public ViewUsersAdminFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ViewUsersAdminFragment extends Fragment implements UsersAdminAdapte
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             User user = document.toObject(User.class);
                             user.setId(document.getId());
-                            // Exclude the current user from the results
+
                             if (!user.getId().equals(currentUserId)) {
                                 userList.add(user);
                             }

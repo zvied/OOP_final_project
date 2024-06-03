@@ -30,7 +30,7 @@ public class ViewCarsAdminFragment extends Fragment implements CarsAdapter.OnIte
     private List<Car> carList;
 
     public ViewCarsAdminFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ViewCarsAdminFragment extends Fragment implements CarsAdapter.OnIte
 
         db = FirebaseFirestore.getInstance();
         carList = new ArrayList<>();
-        adapter = new CarsAdapter(carList, this, true); // Admin view
+        adapter = new CarsAdapter(carList, this, true);
 
         binding.recyclerViewCars.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerViewCars.setAdapter(adapter);
@@ -89,27 +89,22 @@ public class ViewCarsAdminFragment extends Fragment implements CarsAdapter.OnIte
 
     @Override
     public void onDeleteClick(Car car) {
-        // Get a reference to the Firestore document corresponding to the car
         DocumentReference carRef = FirebaseFirestore.getInstance().collection("cars").document(car.getId());
 
-        // Update the isDeleted field to true
         car.setIsDeleted(true);
 
-        // Update the Firestore document with the modified data
         carRef.set(car)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Car successfully updated
                         Toast.makeText(getContext(), "Car deleted successfully", Toast.LENGTH_SHORT).show();
-                        // Refresh the car list or UI if needed
                         fetchCars();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Error updating car
+
                         Log.e(TAG, "Error deleting car", e);
                         Toast.makeText(getContext(), "Failed to delete car", Toast.LENGTH_SHORT).show();
                     }
@@ -118,7 +113,6 @@ public class ViewCarsAdminFragment extends Fragment implements CarsAdapter.OnIte
 
     @Override
     public void onEditClick(Car car) {
-        // Navigate to the edit car fragment with the car details
         Bundle bundle = new Bundle();
         bundle.putSerializable("car", car);
         Navigation.findNavController(getView()).navigate(R.id.nav_edit_car, bundle);
@@ -126,6 +120,5 @@ public class ViewCarsAdminFragment extends Fragment implements CarsAdapter.OnIte
 
     @Override
     public void onMakeReservationClick(Car car) {
-        // Admin should not be making reservations, no implementation needed
     }
 }

@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_about_me) {
-            Intent intent = new Intent(this, SettingsActivity.class); // You might want to rename this to AboutMeActivity
+            Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
             return true;
         }
