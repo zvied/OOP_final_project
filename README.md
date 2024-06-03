@@ -27,5 +27,13 @@ Auto nomas sistēma ir Android lietotne, kas nodrošina iznomāšans opcijas pri
 - **Paziņojumi**: Toast ziņojumi, lai sniegtu atgriezenisko saiti lietotājiem par viņu darbībām.
 
 ---
+>**Administrātora konta pieejas dati:**
+>
+>Ē-pasts: admin@gmail.com
+>
+>Parole: parole1234
+
+
+---
 
 Šo projektu izstrādāja: Kārlis Z. un Reinis B. no LU
