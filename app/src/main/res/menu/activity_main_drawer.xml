@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_view_cars"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/view_cars" />
+        <item
+            android:id="@+id/nav_rent_car"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/rent_car" />
+        <item
+            android:id="@+id/nav_return_car"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/return_car" />
+        <item
+            android:id="@+id/nav_rentals"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/my_rentals" />
+        <item
+            android:id="@+id/nav_edit_profile"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/edit_profile" />
+    </group>
+</menu>
