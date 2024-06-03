@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:background="@mipmap/ic_launcher_round"
+        android:contentDescription="@string/userimage"
+        android:layout_marginBottom="40dp"
+        android:scaleType="centerCrop"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="Current Email"
+        android:inputType="text"
+        android:layout_margin="10dp"
+        android:background="@drawable/edit_text_rounded_corner"
+        android:elevation="5dp"
+        android:id="@+id/current_email"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="New Email"
+        android:inputType="text"
+        android:layout_margin="10dp"
+        android:background="@drawable/edit_text_rounded_corner"
+        android:elevation="5dp"
+        android:id="@+id/new_email"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="Current Password"
+        android:inputType="textPassword"
+        android:background="@drawable/edit_text_rounded_corner"
+        android:layout_margin="10dp"
+        android:elevation="5dp"
+        android:id="@+id/current_password"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="New Password"
+        android:inputType="textPassword"
+        android:background="@drawable/edit_text_rounded_corner"
+        android:layout_margin="10dp"
+        android:elevation="5dp"
+        android:id="@+id/new_password"/>
+
+    <Button
+        android:id="@+id/update_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:layout_marginTop="20dp"/>
+
+</LinearLayout>
