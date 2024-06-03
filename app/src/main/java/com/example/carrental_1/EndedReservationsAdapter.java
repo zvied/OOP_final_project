@@ -31,17 +31,17 @@ public class EndedReservationsAdapter extends RecyclerView.Adapter<EndedReservat
     public void onBindViewHolder(@NonNull ReservationViewHolder holder, int position) {
         Reservation reservation = reservationList.get(position);
         holder.makeModel.setText(reservation.getCar().getMake() + " " + reservation.getCar().getModel());
-        holder.year.setText("Year: " + reservation.getCar().getYear());
-        holder.fuelType.setText("Fuel: " + reservation.getCar().getFuelType());
-        holder.transmissionType.setText("Transmission: " + reservation.getCar().getTransmissionType());
-        holder.pricePerDay.setText("Price per day: " + String.format("%.2f", Double.parseDouble(reservation.getCar().getPricePerDay())) + "€");
-        holder.reservationStartTime.setText("Reservation start: " + reservation.getReservationStartTime().toString());
-        holder.reservationEndTime.setText("Reservation end: " + reservation.getReservationEndTime().toString());
-        holder.totalPrice.setText("Total price: " + String.format("%.2f", (double) reservation.getTotalPrice()) + "€");
+        holder.year.setText(reservation.getCar().getYear());
+        holder.fuelType.setText(reservation.getCar().getFuelType());
+        holder.transmissionType.setText(reservation.getCar().getTransmissionType());
+        holder.pricePerDay.setText(String.format("%.2f", Double.parseDouble(reservation.getCar().getPricePerDay())) + "€");
+        holder.reservationStartTime.setText(reservation.getReservationStartTime().toString());
+        holder.reservationEndTime.setText(reservation.getReservationEndTime().toString());
+        holder.totalPrice.setText(String.format("%.2f", (double) reservation.getTotalPrice()) + "€");
 
         long duration = reservation.getReservationEndTime().getTime() - reservation.getReservationStartTime().getTime();
         String durationText = formatDuration(duration);
-        holder.reservationDuration.setText("Duration: " + durationText);
+        holder.reservationDuration.setText(durationText);
     }
 
     @Override

@@ -42,11 +42,11 @@ public class ReturnCarAdapter extends RecyclerView.Adapter<ReturnCarAdapter.Rese
     public void onBindViewHolder(@NonNull ReservationViewHolder holder, int position) {
         Reservation reservation = reservationList.get(position);
         holder.makeModel.setText(reservation.getCar().getMake() + " " + reservation.getCar().getModel());
-        holder.year.setText("Year: " + reservation.getCar().getYear());
-        holder.fuelType.setText("Fuel: " + reservation.getCar().getFuelType());
-        holder.transmissionType.setText("Transmission: " + reservation.getCar().getTransmissionType());
-        holder.pricePerDay.setText("Price per day: " + String.format("%.2f", Double.parseDouble(reservation.getCar().getPricePerDay())) + "€");
-        holder.reservationStartTime.setText("Reservation start: " + reservation.getReservationStartTime().toString());
+        holder.year.setText(reservation.getCar().getYear());
+        holder.fuelType.setText(reservation.getCar().getFuelType());
+        holder.transmissionType.setText(reservation.getCar().getTransmissionType());
+        holder.pricePerDay.setText(String.format("%.2f", Double.parseDouble(reservation.getCar().getPricePerDay())) + "€");
+        holder.reservationStartTime.setText(reservation.getReservationStartTime().toString());
 
         holder.returnCarButton.setOnClickListener(v -> onItemClickListener.onReturnCarClick(reservation));
 
@@ -56,7 +56,7 @@ public class ReturnCarAdapter extends RecyclerView.Adapter<ReturnCarAdapter.Rese
             public void run() {
                 long duration = System.currentTimeMillis() - reservation.getReservationStartTime().getTime();
                 String durationText = formatDuration(duration);
-                holder.reservationDuration.setText("Duration: " + durationText);
+                holder.reservationDuration.setText(durationText);
 
                 // Schedule the next update in 1 second
                 handler.postDelayed(this, 1000);

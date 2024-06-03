@@ -13,6 +13,8 @@ import com.example.carrental_1.data.model.User;
 import com.example.carrental_1.databinding.FragmentViewUsersAdminBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -52,6 +54,10 @@ public class ViewUsersAdminFragment extends Fragment implements UsersAdminAdapte
     }
 
     private void fetchUsers() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        String currentUserId = currentUser.getUid();
+
         db.collection("users")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -61,7 +67,10 @@ public class ViewUsersAdminFragment extends Fragment implements UsersAdminAdapte
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             User user = document.toObject(User.class);
                             user.setId(document.getId());
-                            userList.add(user);
+                            // Exclude the current user from the results
+                            if (!user.getId().equals(currentUserId)) {
+                                userList.add(user);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -116,6 +125,25 @@ public class ViewUsersAdminFragment extends Fragment implements UsersAdminAdapte
     public void onUnblockClick(User user) {
         db.collection("users").document(user.getId())
                 .update("isDeleted", false)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getContext(), "User unblocked successfully", Toast.LENGTH_SHORT).show();
+                        fetchUsers();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Failed to unblock user", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    @Override
+    public void onRemoveAdmin(User user) {
+        db.collection("users").document(user.getId())
+                .update("isAdmin", false)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

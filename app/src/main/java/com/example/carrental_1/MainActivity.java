@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     navController.navigate(item.getItemId());
                 }
+
                 DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;

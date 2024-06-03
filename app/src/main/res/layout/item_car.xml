@@ -146,9 +146,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/priceLayout"
         android:text="Edit"
-        android:layout_toStartOf="@id/buttonMakeReservation"
-        android:layout_marginStart="8dp"
-        android:visibility="visible"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"/>
 
     <!-- Delete Button -->
     <Button
@@ -157,8 +156,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/priceLayout"
         android:text="Delete"
-        android:layout_toStartOf="@id/buttonEditCar"
-        android:visibility="gone"/>
+        android:layout_toStartOf="@id/buttonEditCar"/>
 
     <!-- Border -->
     <View

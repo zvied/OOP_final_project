@@ -14,59 +14,186 @@
         android:textStyle="bold"/>
 
     <!-- Year -->
-    <TextView
-        android:id="@+id/textYear"
+    <LinearLayout
+        android:id="@+id/yearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_below="@id/textMakeModel"
-        android:textSize="15dp"/>
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:id="@+id/textYearLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Year: "
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:baselineAligned="false"/>
+
+        <TextView
+            android:id="@+id/textYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"/>
+    </LinearLayout>
 
     <!-- Fuel Type -->
-    <TextView
-        android:id="@+id/textFuelType"
+    <LinearLayout
+        android:id="@+id/fuelLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textYear"
-        android:textSize="15dp"/>
+        android:orientation="horizontal"
+        android:layout_below="@id/yearLayout"
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:id="@+id/textFuelTypeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fuel: "
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:baselineAligned="false"/>
+
+        <TextView
+            android:id="@+id/textFuelType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"/>
+    </LinearLayout>
 
     <!-- Transmission Type -->
-    <TextView
-        android:id="@+id/textTransmissionType"
+    <LinearLayout
+        android:id="@+id/transmissionLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textFuelType"
-        android:textSize="15dp"/>
+        android:orientation="horizontal"
+        android:layout_below="@id/fuelLayout"
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:id="@+id/textTransmissionTypeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transmission: "
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:baselineAligned="false"/>
+
+        <TextView
+            android:id="@+id/textTransmissionType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"/>
+    </LinearLayout>
 
     <!-- Price Per Day -->
-    <TextView
-        android:id="@+id/textPricePerDay"
+    <LinearLayout
+        android:id="@+id/priceLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textTransmissionType"
-        android:textSize="15dp"/>
+        android:orientation="horizontal"
+        android:layout_below="@id/transmissionLayout"
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:id="@+id/textPriceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price per day: "
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:baselineAligned="false"/>
+
+        <TextView
+            android:id="@+id/textPricePerDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"/>
+    </LinearLayout>
 
     <!-- Reservation Start Time -->
-    <TextView
-        android:id="@+id/textReservationStartTime"
+    <LinearLayout
+        android:id="@+id/reservationStartTimeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textPricePerDay"
-        android:textSize="15dp"/>
+        android:orientation="horizontal"
+        android:layout_below="@id/priceLayout"
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:id="@+id/textReservationStartTimeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reservation Start Time: "
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:baselineAligned="false"/>
+
+        <TextView
+            android:id="@+id/textReservationStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"/>
+    </LinearLayout>
+
+    <!-- Total Price -->
+    <LinearLayout
+        android:id="@+id/totalPriceLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/reservationStartTimeLayout"
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:id="@+id/textTotalPriceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Price: "
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:baselineAligned="false"/>
+
+        <TextView
+            android:id="@+id/textTotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"/>
+    </LinearLayout>
 
     <!-- Reservation Duration -->
-    <TextView
-        android:id="@+id/textReservationDuration"
+    <LinearLayout
+        android:id="@+id/reservationDurationLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textReservationStartTime"
-        android:textSize="15dp"/> <!-- Add this line -->
+        android:orientation="horizontal"
+        android:layout_below="@id/totalPriceLayout"
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:id="@+id/textReservationDurationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reservation Duration: "
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:baselineAligned="false"/>
+
+        <TextView
+            android:id="@+id/textReservationDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"/>
+    </LinearLayout>
 
     <!-- Return Car Button -->
     <Button
         android:id="@+id/buttonReturnCar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textReservationStartTime"
+        android:layout_below="@id/reservationDurationLayout"
         android:layout_marginTop="20dp"
         android:layout_alignParentEnd="true"
         android:text="Return Car"/>
@@ -79,5 +206,4 @@
         android:layout_marginTop="8dp"
         android:layout_below="@id/buttonReturnCar"
         android:background="@android:color/darker_gray"/>
-
 </RelativeLayout>

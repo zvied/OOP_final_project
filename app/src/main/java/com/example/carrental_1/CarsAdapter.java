@@ -66,7 +66,6 @@ public class CarsAdapter extends RecyclerView.Adapter<CarsAdapter.CarViewHolder>
             holder.makeReservationButton.setOnClickListener(v -> onItemClickListener.onMakeReservationClick(car));
         }
 
-        // Adjust the border layout parameters based on the button visibility
         RelativeLayout.LayoutParams borderParams = (RelativeLayout.LayoutParams) holder.borderView.getLayoutParams();
         if (holder.makeReservationButton.getVisibility() == View.VISIBLE) {
             borderParams.addRule(RelativeLayout.BELOW, R.id.buttonMakeReservation);

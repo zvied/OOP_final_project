@@ -39,13 +39,23 @@ public class UsersAdminAdapter extends RecyclerView.Adapter<UsersAdminAdapter.Us
             holder.makeAdminButton.setVisibility(View.GONE);
         } else {
             holder.unblockButton.setVisibility(View.GONE);
+            if (user.getIsAdmin()) {
+                holder.removeAdminButton.setVisibility(View.VISIBLE);
+                holder.makeAdminButton.setVisibility(View.GONE);
+                holder.isAdminText.setVisibility(View.VISIBLE);
+            } else {
+                holder.makeAdminButton.setVisibility(View.VISIBLE);
+                holder.removeAdminButton.setVisibility(View.GONE);
+                holder.isAdminText.setVisibility(View.GONE);
+            }
+
             holder.deleteButton.setVisibility(View.VISIBLE);
-            holder.makeAdminButton.setVisibility(View.VISIBLE);
         }
 
         holder.deleteButton.setOnClickListener(v -> onUserItemClickListener.onDeleteClick(user));
         holder.makeAdminButton.setOnClickListener(v -> onUserItemClickListener.onMakeAdminClick(user));
         holder.unblockButton.setOnClickListener(v -> onUserItemClickListener.onUnblockClick(user));
+        holder.removeAdminButton.setOnClickListener(v -> onUserItemClickListener.onRemoveAdmin(user));
     }
 
     @Override
@@ -54,16 +64,18 @@ public class UsersAdminAdapter extends RecyclerView.Adapter<UsersAdminAdapter.Us
     }
 
     static class UserViewHolder extends RecyclerView.ViewHolder {
-        TextView userName, userEmail;
-        Button deleteButton, makeAdminButton, unblockButton;
+        TextView userName, userEmail, isAdminText;
+        Button deleteButton, makeAdminButton, unblockButton , removeAdminButton;
 
         UserViewHolder(View view) {
             super(view);
             userName = view.findViewById(R.id.userName);
             userEmail = view.findViewById(R.id.userEmail);
+            isAdminText = view.findViewById(R.id.isAdminText);
             deleteButton = view.findViewById(R.id.deleteButton);
             makeAdminButton = view.findViewById(R.id.makeAdminButton);
             unblockButton = view.findViewById(R.id.unblockButton);
+            removeAdminButton = view.findViewById(R.id.removeAdminButton);
         }
     }
 
@@ -71,5 +83,7 @@ public class UsersAdminAdapter extends RecyclerView.Adapter<UsersAdminAdapter.Us
         void onDeleteClick(User user);
         void onMakeAdminClick(User user);
         void onUnblockClick(User user);
+
+        void onRemoveAdmin(User user);
     }
 }

@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,11 +28,13 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ReturnCarFragment extends Fragment implements ReturnCarAdapter.OnItemClickListener {
+    private static final String TAG = "ReturnCarFragment";
     private FragmentReturnCarBinding binding;
     private FirebaseFirestore db;
     private ReturnCarAdapter adapter;
     private List<Reservation> reservationList;
     private FirebaseAuth auth;
+    private int pendingFetches = 0;
 
     public ReturnCarFragment() {
         // Required empty public constructor
@@ -67,18 +71,17 @@ public class ReturnCarFragment extends Fragment implements ReturnCarAdapter.OnIt
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         reservationList.clear();
-                        for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
-                            Reservation reservation = document.toObject(Reservation.class);
-                            if (reservation != null) {
-                                reservation.setId(document.getId());
-                                fetchCarDetails(reservation);
-                            }
-                        }
-
-                        if (reservationList.isEmpty()) {
-                            binding.textNoReservations.setVisibility(View.VISIBLE);
+                        pendingFetches = queryDocumentSnapshots.size();
+                        if (pendingFetches == 0) {
+                            updateReservationsUI();
                         } else {
-                            binding.textNoReservations.setVisibility(View.GONE);
+                            for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                                Reservation reservation = document.toObject(Reservation.class);
+                                if (reservation != null) {
+                                    reservation.setId(document.getId());
+                                    fetchCarDetails(reservation);
+                                }
+                            }
                         }
                     }
                 })
@@ -103,15 +106,35 @@ public class ReturnCarFragment extends Fragment implements ReturnCarAdapter.OnIt
                             reservationList.add(reservation);
                             adapter.notifyDataSetChanged();
                         }
+                        pendingFetches--;
+                        if (pendingFetches == 0) {
+                            updateReservationsUI();
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        pendingFetches--;
+                        if (pendingFetches == 0) {
+                            updateReservationsUI();
+                        }
                         Toast.makeText(getContext(), "Failed to fetch car details", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
+    private void updateReservationsUI() {
+        if (reservationList.isEmpty()) {
+            Log.d(TAG, "No current reservations");
+            binding.textNoReservations.setVisibility(View.VISIBLE);
+        } else {
+            Log.d(TAG, "Current reservations available");
+            binding.textNoReservations.setVisibility(View.GONE);
+        }
+        adapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public void onReturnCarClick(Reservation reservation) {

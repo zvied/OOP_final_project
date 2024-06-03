@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.carrental_1.CarsAdapter;
 import com.example.carrental_1.HomeReservationsAdapter;
+import com.example.carrental_1.MainActivity;
 import com.example.carrental_1.data.model.Car;
 import com.example.carrental_1.data.model.Reservation;
 import com.example.carrental_1.databinding.FragmentHomeBinding;
@@ -30,7 +31,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickListener , HomeReservationsAdapter.OnItemClickListener {
-    private static final String TAG = "ProfileFragment";
+    private static final String TAG = "HomeFragment";
     private FragmentHomeBinding binding;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
@@ -67,6 +68,8 @@ public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickLis
         checkUserRoleAndFetchData();
     }
 
+
+
     private void checkUserRoleAndFetchData() {
         String userId = auth.getCurrentUser().getUid();
         db.collection("users").document(userId).get()
@@ -77,9 +80,11 @@ public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickLis
                             isAdmin = documentSnapshot.getBoolean("isAdmin") != null && Boolean.TRUE.equals(documentSnapshot.getBoolean("isAdmin"));
                             if (isAdmin) {
                                 binding.recyclerViewCars.setAdapter(reservationsAdapter);
+                                setFragmentLabel("Current active reservations");
                                 fetchActiveReservations();
                             } else {
                                 binding.recyclerViewCars.setAdapter(adapter);
+                                setFragmentLabel("Available cars");
                                 fetchAvailableCars();
                             }
                         } else {
@@ -93,6 +98,10 @@ public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickLis
                         Toast.makeText(getContext(), "Failed to fetch user data", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void setFragmentLabel(String label) {
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(label);
     }
 
     private void fetchAvailableCars() {

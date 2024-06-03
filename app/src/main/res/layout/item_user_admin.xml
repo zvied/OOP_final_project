@@ -11,12 +11,43 @@
         android:textSize="18sp"
         android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/userEmail"
+    <!-- UserEmail -->
+    <LinearLayout
+        android:id="@+id/userEmailLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_below="@id/userName"
-        android:textSize="16sp"/>
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:id="@+id/textYearLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: "
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:baselineAligned="false"/>
+
+        <TextView
+            android:id="@+id/userEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userName"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/isAdminText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="isAdmin"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_below="@id/userEmailLayout"
+        android:visibility="gone"
+        android:baselineAligned="false"/>
+
 
     <LinearLayout
         android:id="@+id/buttonLayout"
@@ -24,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:orientation="horizontal"
-        android:layout_below="@id/userEmail"
+        android:layout_below="@id/isAdminText"
         android:layout_marginTop="8dp">
 
         <Button
@@ -43,6 +74,14 @@
             android:visibility="gone"/>
 
         <Button
+            android:id="@+id/removeAdminButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remove Admin"
+            android:layout_marginStart="8dp"
+            android:visibility="gone"/>
+
+        <Button
             android:id="@+id/unblockButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,5 +89,14 @@
             android:layout_marginStart="8dp"
             android:visibility="gone"/>
     </LinearLayout>
+
+    <!-- Border -->
+    <View
+        android:id="@+id/borderView"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/buttonLayout"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray"/>
 
 </RelativeLayout>
