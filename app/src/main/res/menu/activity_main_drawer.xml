@@ -25,11 +25,6 @@
             android:title="@string/my_rentals"
             android:visible="false"/>
         <item
-            android:id="@+id/nav_edit_profile"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/edit_profile"
-            android:visible="false"/>
-        <item
             android:id="@+id/nav_add_car"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/add_car"
@@ -54,5 +49,10 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/show_users"
             android:visible="false" />
+        <item
+            android:id="@+id/nav_edit_profile"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/edit_profile"
+            android:visible="false"/>
     </group>
 </menu>

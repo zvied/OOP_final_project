@@ -123,10 +123,10 @@ public class MainActivity extends AppCompatActivity {
         Menu menu = navigationView.getMenu();
         if (isAdmin) {
             menu.findItem(R.id.nav_add_car).setVisible(true);
-            menu.findItem(R.id.nav_add_admin).setVisible(true);
             menu.findItem(R.id.nav_view_cars_admin).setVisible(true);
             menu.findItem(R.id.nav_show_rents_admin).setVisible(true);
             menu.findItem(R.id.nav_show_users_admin).setVisible(true);
+            menu.findItem(R.id.nav_edit_profile).setVisible(true);
         } else {
             menu.findItem(R.id.nav_return_car).setVisible(true);
             menu.findItem(R.id.nav_rentals).setVisible(true);
