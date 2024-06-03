@@ -64,4 +64,10 @@
         android:name="com.example.carrental_1.ProfileFragment"
         android:label="Edit Profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/nav_show_rents_admin"
+        android:name="com.example.carrental_1.ShowEndedReservationsFragment"
+        android:label="Finished reservations"
+        tools:layout="@layout/fragment_show_ended_reservations" />
 </navigation>

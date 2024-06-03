@@ -5,12 +5,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.carrental_1.CarsAdapter;
+import com.example.carrental_1.HomeReservationsAdapter;
 import com.example.carrental_1.data.model.Car;
 import com.example.carrental_1.data.model.Reservation;
 import com.example.carrental_1.databinding.FragmentHomeBinding;
@@ -20,18 +23,23 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickListener {
-
+public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickListener , HomeReservationsAdapter.OnItemClickListener {
+    private static final String TAG = "ProfileFragment";
     private FragmentHomeBinding binding;
     private FirebaseFirestore db;
+    private FirebaseAuth auth;
     private CarsAdapter adapter;
+    private HomeReservationsAdapter reservationsAdapter;
     private List<Car> carList;
+    private List<Reservation> reservationList;
     private boolean isAdmin;
-
+    private int pendingFetches = 0;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -46,18 +54,45 @@ public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickLis
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getArguments() != null) {
-            isAdmin = getArguments().getBoolean("isAdmin");
-        }
-
         db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
         carList = new ArrayList<>();
-        adapter = new CarsAdapter(carList, this, isAdmin);
+        reservationList = new ArrayList<>();
+        adapter = new CarsAdapter(carList, this, false);
+        reservationsAdapter = new HomeReservationsAdapter(reservationList, this);
 
         binding.recyclerViewCars.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerViewCars.setAdapter(adapter);
 
-        fetchAvailableCars();
+        checkUserRoleAndFetchData();
+    }
+
+    private void checkUserRoleAndFetchData() {
+        String userId = auth.getCurrentUser().getUid();
+        db.collection("users").document(userId).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            isAdmin = documentSnapshot.getBoolean("isAdmin") != null && Boolean.TRUE.equals(documentSnapshot.getBoolean("isAdmin"));
+                            if (isAdmin) {
+                                binding.recyclerViewCars.setAdapter(reservationsAdapter);
+                                fetchActiveReservations();
+                            } else {
+                                binding.recyclerViewCars.setAdapter(adapter);
+                                fetchAvailableCars();
+                            }
+                        } else {
+                            Toast.makeText(getContext(), "User data not found", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Failed to fetch user data", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void fetchAvailableCars() {
@@ -84,6 +119,78 @@ public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickLis
                     }
                 });
     }
+
+    private void fetchActiveReservations() {
+        db.collection("reservations")
+                .whereEqualTo("isReservationOver", false)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        reservationList.clear();
+                        pendingFetches = queryDocumentSnapshots.size();
+                        if (pendingFetches == 0) {
+                            updateReservationsUI();
+                        } else {
+                            for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
+                                Reservation reservation = document.toObject(Reservation.class);
+                                if (reservation != null) {
+                                    reservation.setId(document.getId());
+                                    fetchCarDetails(reservation);
+                                }
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Failed to fetch reservations", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void fetchCarDetails(Reservation reservation) {
+        db.collection("cars").document(reservation.getCarId())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Car car = documentSnapshot.toObject(Car.class);
+                        if (car != null) {
+                            car.setId(documentSnapshot.getId());
+                            reservation.setCar(car);
+                            reservationList.add(reservation);
+                        }
+                        pendingFetches--;
+                        if (pendingFetches == 0) {
+                            updateReservationsUI();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        pendingFetches--;
+                        if (pendingFetches == 0) {
+                            updateReservationsUI();
+                        }
+                        Toast.makeText(getContext(), "Failed to fetch car details", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void updateReservationsUI() {
+        if (reservationList.isEmpty()) {
+            Log.d(TAG, "No current reservations");
+            binding.textNoReservations.setVisibility(View.VISIBLE);
+        } else {
+            Log.d(TAG, "Current reservations available");
+            binding.textNoReservations.setVisibility(View.GONE);
+        }
+        reservationsAdapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public void onDeleteClick(Car car) {
@@ -118,5 +225,58 @@ public class HomeFragment extends Fragment implements CarsAdapter.OnItemClickLis
                             .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to update car availability", Toast.LENGTH_SHORT).show());
                 })
                 .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to make reservation", Toast.LENGTH_SHORT).show());
+    }
+
+    @Override
+    public void onReturnCarClick(Reservation reservation) {
+        returnCar(reservation);
+    }
+
+    private void returnCar(Reservation reservation) {
+        // Update reservation end time and calculate price
+        Date endTime = new Date();
+        long duration = endTime.getTime() - reservation.getReservationStartTime().getTime();
+        long days = TimeUnit.MILLISECONDS.toDays(duration);
+        if (days == 0) {
+            days = 1; // Minimum charge for one day
+        }
+        double totalPrice = days * Integer.parseInt(reservation.getCar().getPricePerDay());
+
+        // Update the reservation object
+        reservation.setReservationEndTime(endTime);
+        reservation.setIsReservationOver(true);
+        reservation.setTotalPrice(totalPrice);
+        reservation.setReservationDuration(duration);  // Set reservation duration
+
+        // Update the car availability
+        db.collection("cars").document(reservation.getCarId())
+                .update("isAvailable", true)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Update the reservation in Firestore
+                        db.collection("reservations").document(reservation.getId())
+                                .set(reservation)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getContext(), "Car returned successfully", Toast.LENGTH_SHORT).show();
+                                        fetchActiveReservations();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getContext(), "Failed to update reservation", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Failed to update car availability", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

@@ -35,8 +35,8 @@
     <string name="surname">Surname</string>
     <string name="add_car">Add Car</string>
     <string name="add_new_admin">Add New Admin</string>
-    <string name="show_rents">Show Rents</string>
-    <string name="show_users">Show Users</string>
+    <string name="show_rents">Show All ended Rents</string>
+    <string name="show_users">Show All Users</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_new_car">Add New Car</string>
@@ -45,7 +45,7 @@
     <string name="year">Year</string>
     <string name="model">Model</string>
     <string name="make">Make</string>
-    <string name="show_cars">Show cars</string>
+    <string name="show_cars">Show All cars</string>
     <string name="no_current_reservations_are_active">No current reservations are active</string>
     <string name="userimage">userimage</string>
     <string-array name="fuel_type_array">
