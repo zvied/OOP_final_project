@@ -70,41 +70,49 @@ public class ProfileFragment extends Fragment {
         String currentPassword = currentPasswordEditText.getText().toString().trim();
         String newPassword = newPasswordEditText.getText().toString().trim();
 
-        if (TextUtils.isEmpty(currentEmail) || TextUtils.isEmpty(newEmail) || TextUtils.isEmpty(currentPassword) || TextUtils.isEmpty(newPassword)) {
-            Toast.makeText(getActivity(), "All fields are required", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(currentEmail) || TextUtils.isEmpty(currentPassword)) {
+            Toast.makeText(getActivity(), "Current email and password are required", Toast.LENGTH_SHORT).show();
             return;
         }
 
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
-            reauthenticateAndUpdateEmail(user, currentEmail, newEmail, currentPassword);
-            updatePassword(user, newPassword);
+            reauthenticateUser(user, currentEmail, currentPassword, newEmail, newPassword);
         }
     }
 
-    private void reauthenticateAndUpdateEmail(FirebaseUser user, String currentEmail, String newEmail, String currentPassword) {
+    private void reauthenticateUser(FirebaseUser user, String currentEmail, String currentPassword, String newEmail, String newPassword) {
         AuthCredential credential = EmailAuthProvider.getCredential(currentEmail, currentPassword);
         user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "Re-authentication successful.");
-                    user.updateEmail(newEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Log.d(TAG, "Email updated successfully.");
-                                sendVerificationEmail(user, newEmail);
-                                updateFirestoreEmail(user, newEmail);
-                            } else {
-                                Log.e(TAG, "Failed to update email: " + task.getException());
-                                Toast.makeText(getActivity(), "Failed to update email", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                    if (!TextUtils.isEmpty(newEmail)) {
+                        updateEmail(user, newEmail);
+                    }
+                    if (!TextUtils.isEmpty(newPassword)) {
+                        updatePassword(user, newPassword);
+                    }
                 } else {
                     Log.e(TAG, "Re-authentication failed: " + task.getException());
                     Toast.makeText(getActivity(), "Re-authentication failed. Please try again.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void updateEmail(FirebaseUser user, String newEmail) {
+        user.updateEmail(newEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "Email updated successfully.");
+                    sendVerificationEmail(user, newEmail);
+                    updateFirestoreEmail(user, newEmail);
+                } else {
+                    Log.e(TAG, "Failed to update email: " + task.getException());
+                    Toast.makeText(getActivity(), "Failed to update email", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -133,6 +141,7 @@ public class ProfileFragment extends Fragment {
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "Email updated in Firestore.");
                         Toast.makeText(getActivity(), "Email updated in Firestore", Toast.LENGTH_SHORT).show();
+                        refreshUserDetails();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -157,5 +166,12 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void refreshUserDetails() {
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+            mainActivity.refreshUserDetails();
+        }
     }
 }

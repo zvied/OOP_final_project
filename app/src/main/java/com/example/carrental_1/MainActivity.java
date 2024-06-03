@@ -3,7 +3,6 @@ package com.example.carrental_1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.MenuCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -101,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                             if (name != null && surname != null) {
                                 userName.setText(name + " " + surname);
                             }
+                            userEmail.setText(documentSnapshot.getString("email"));
                             setupMenu();
                         } else {
                             userName.setText("User Name");
@@ -113,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
                         userName.setText("User Name");
                     }
                 });
+    }
+
+    public void refreshUserDetails() {
+        fetchUserDetailsAndSetupMenu();
     }
 
     private void setupMenu() {
@@ -136,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
                 NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment_content_main);
                 if (item.getItemId() == R.id.nav_add_car) {
                     navController.navigate(R.id.nav_add_car);
-
                 } else if (item.getItemId() == R.id.nav_view_cars_admin) {
                     navController.navigate(R.id.nav_view_cars_admin);
                 } else {
