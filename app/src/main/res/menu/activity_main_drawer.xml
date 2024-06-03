@@ -7,22 +7,52 @@
         <item
             android:id="@+id/nav_view_cars"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/view_cars" />
+            android:title="@string/view_cars"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_rent_car"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/rent_car" />
+            android:title="@string/rent_car"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_return_car"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/return_car" />
+            android:title="@string/return_car"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_rentals"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/my_rentals" />
+            android:title="@string/my_rentals"
+            android:visible="false"/>
         <item
             android:id="@+id/nav_edit_profile"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/edit_profile" />
+            android:title="@string/edit_profile"
+            android:visible="false"/>
+        <item
+            android:id="@+id/nav_add_car"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/add_car"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_add_admin"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/add_new_admin"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_view_cars_admin"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/show_cars"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_show_rents_admin"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/show_rents"
+            android:visible="false" />
+        <item
+            android:id="@+id/nav_show_users_admin"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/show_users"
+            android:visible="false" />
     </group>
 </menu>

@@ -15,6 +15,7 @@ googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.0.0"
 activity = "1.9.0"
 firebaseInappmessaging = "21.0.0"
+firebaseFirestore = "25.0.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -31,6 +32,7 @@ annotation = { group = "androidx.annotation", name = "annotation", version.ref =
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 firebase-inappmessaging = { group = "com.google.firebase", name = "firebase-inappmessaging", version.ref = "firebaseInappmessaging" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

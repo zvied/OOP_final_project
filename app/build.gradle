@@ -29,6 +29,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 }
 
@@ -44,6 +45,7 @@ dependencies {
     implementation libs.annotation
     implementation libs.activity
     implementation libs.firebase.inappmessaging
+    implementation libs.firebase.firestore
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core

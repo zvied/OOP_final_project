@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/userEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userName"
+        android:textSize="16sp"/>
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:orientation="horizontal"
+        android:layout_below="@id/userEmail"
+        android:layout_marginTop="8dp">
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/makeAdminButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Make Admin"
+            android:layout_marginStart="8dp"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/unblockButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unblock"
+            android:layout_marginStart="8dp"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+</RelativeLayout>

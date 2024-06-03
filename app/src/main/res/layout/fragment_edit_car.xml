@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <!-- Add any necessary data binding variables here -->
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/editTextMake"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Make"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textSize="16sp"/>
+
+        <EditText
+            android:id="@+id/editTextModel"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Model"
+            android:layout_below="@id/editTextMake"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textSize="16sp"/>
+
+        <EditText
+            android:id="@+id/editTextYear"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Year"
+            android:layout_below="@id/editTextModel"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textSize="16sp"/>
+
+        <Spinner
+            android:id="@+id/spinnerFuelType"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/editTextYear"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edit_text_background"
+            android:padding="6dp"/>
+
+        <Spinner
+            android:id="@+id/spinnerTransmissionType"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@id/spinnerFuelType"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edit_text_background"
+            android:padding="6dp"/>
+
+        <EditText
+            android:id="@+id/editTextPricePerDay"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Price Per Day"
+            android:layout_below="@id/spinnerTransmissionType"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edit_text_background"
+            android:padding="12dp"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/buttonSaveCar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Save"
+            android:layout_below="@id/editTextPricePerDay"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
+</layout>

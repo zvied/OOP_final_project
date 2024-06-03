@@ -22,4 +22,28 @@
         android:name="com.example.carrental_1.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_add_car"
+        android:name="com.example.carrental_1.AddCarFragment"
+        android:label="Add New Car"
+        tools:layout="@layout/fragment_add_car" />
+
+    <fragment
+        android:id="@+id/nav_view_cars_admin"
+        android:name="com.example.carrental_1.ViewCarsAdminFragment"
+        android:label="View All cars"
+        tools:layout="@layout/fragment_view_cars_admin" />
+
+    <fragment
+        android:id="@+id/nav_edit_car"
+        android:name="com.example.carrental_1.EditCarFragment"
+        android:label="Edit Car"
+        tools:layout="@layout/fragment_edit_car" />
+
+    <fragment
+        android:id="@+id/nav_show_users_admin"
+        android:name="com.example.carrental_1.ViewUsersAdminFragment"
+        android:label="Edit Car"
+        tools:layout="@layout/fragment_view_users_admin" />
 </navigation>

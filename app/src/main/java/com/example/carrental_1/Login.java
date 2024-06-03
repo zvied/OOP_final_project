@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.carrental_1.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -24,6 +25,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -96,15 +99,44 @@ public class Login extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
+                                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                                    if (firebaseUser != null) {
+                                        String userId = firebaseUser.getUid();
+                                        FirebaseFirestore.getInstance().collection("users").document(userId)
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful() && task.getResult() != null) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+                                                                User user = document.toObject(User.class);
+                                                                if (user != null) {
+                                                                    if (user.getIsDeleted()) {
+                                                                        Toast.makeText(Login.this, "User is deleted.", Toast.LENGTH_SHORT).show();
+                                                                        mAuth.signOut();
+                                                                    } else {
+                                                                        Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                                                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                                        startActivity(intent);
+                                                                        finish();
+                                                                    }
+                                                                }
+                                                            } else {
+                                                                Toast.makeText(Login.this, "User does not exist.", Toast.LENGTH_SHORT).show();
+                                                                mAuth.signOut();
+                                                            }
+                                                        } else {
+                                                            Toast.makeText(Login.this, "Failed to fetch user data.", Toast.LENGTH_SHORT).show();
+                                                            mAuth.signOut();
+                                                        }
+                                                    }
+                                                });
+                                    } else {
+                                        Toast.makeText(Login.this, "Failed to get user data.", Toast.LENGTH_SHORT).show();
+                                    }
                                 } else {
-
-                                    Toast.makeText(Login.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-
+                                    Toast.makeText(Login.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

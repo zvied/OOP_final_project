@@ -16,23 +16,29 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.inappmessaging.model.Button;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Register extends AppCompatActivity {
 
-    TextInputEditText editTextEmail, editTextPassword;
+    TextInputEditText editTextEmail, editTextPassword, editTextName, editTextSurname;
     View buttonReg;
     FirebaseAuth mAuth;
+    FirebaseFirestore db;
     ProgressBar progressBar;
     TextView textView;
-
 
     @Override
     public void onStart() {
@@ -51,16 +57,22 @@ public class Register extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
+        editTextName = findViewById(R.id.name);
+        editTextSurname = findViewById(R.id.surname);
         buttonReg = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.loginNow);
+
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,15 +86,29 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 progressBar.setVisibility(View.VISIBLE);
-                String email, password;
-                email = Objects.requireNonNull(editTextEmail.getText()).toString();
-                password = Objects.requireNonNull(editTextPassword.getText()).toString();
-                if (TextUtils.isEmpty(email)){
+                String email = Objects.requireNonNull(editTextEmail.getText()).toString();
+                String password = Objects.requireNonNull(editTextPassword.getText()).toString();
+                String name = Objects.requireNonNull(editTextName.getText()).toString();
+                String surname = Objects.requireNonNull(editTextSurname.getText()).toString();
+
+                if (TextUtils.isEmpty(email)) {
                     Toast.makeText(Register.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
-                if (TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    return;
+                }
+                if (TextUtils.isEmpty(name)) {
+                    Toast.makeText(Register.this, "Enter name", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    return;
+                }
+                if (TextUtils.isEmpty(surname)) {
+                    Toast.makeText(Register.this, "Enter surname", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
                     return;
                 }
 
@@ -92,20 +118,39 @@ public class Register extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(Register.this, "Account created.",
-                                            Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), Login.class);
-                                    startActivity(intent);
-                                    finish();
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    Map<String, Object> userMap = new HashMap<>();
+                                    userMap.put("name", name);
+                                    userMap.put("surname", surname);
+                                    userMap.put("email", email);
+                                    userMap.put("isAdmin", false);
+                                    userMap.put("isDeleted", false);
+
+                                    db.collection("users").document(user.getUid())
+                                            .set(userMap)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(Register.this, "Account created.",
+                                                            Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(getApplicationContext(), Login.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(Register.this, "Failed to save user data.",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
                                 } else {
-                                    // If sign in fails, display a message to the user.
                                     Toast.makeText(Register.this, "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-
-
             }
         });
     }
