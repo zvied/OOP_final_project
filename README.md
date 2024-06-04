@@ -2,6 +2,13 @@
 
 ## Sistēmas vispārīgs apraksts
 
+---
+
+Saite uz dokumentāciju:
+https://docs.google.com/document/d/1BlUpxJKtoH2i8ZXjIvbwXyrtgDmS6EcQ_e8E6iXfgdU/edit?usp=sharing
+
+---
+
 Auto nomas sistēma ir Android lietotne, kas nodrošina iznomāšans opcijas priekš nomātājiem. Sistēma ļauj lietotājiem pārlūkot pieejamās automašīnas, veikt rezervācijas un pārvaldīt savas nomas darbības. Administratoriem ir papildu funkcionalitātes, lai pārvaldītu auto, skatītu visas rezervācijas un veiktu lietotāju  un rezervāciju pārvaldību.
 
 ## Vajadzību un prasību apraksts
